@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Вход</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="Account" asp-action="Login">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required 
+                                   value="@Context.Request.Query["email"]" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Пароль</label>
+                            <input type="password" class="form-control" name="password" required />
+                        </div>
+
+                        <!-- Отображение ошибок -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                                <div class="alert alert-danger">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                            <p class="mb-0">@error.ErrorMessage</p>
+                                }
+                                </div>
+                        }
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                            <a href="/" class="btn btn-secondary">На главную</a>
+                        </div>
+
+                        <div class="mt-3 text-center">
+                            <a asp-controller="Account" asp-action="Register">Создать аккаунт</a>
+                        </div>
+                    </form>
+
+                    <!-- Тестовые пользователи для отладки -->
+                    <div class="mt-4 border-top pt-3">
+                        <h6>Тестовые пользователи:</h6>
+                        <div class="small">
+                            <p><strong>Модератор:</strong> moderator@example.com / Moderator123!</p>
+                            <p><strong>Пользователь:</strong> user@example.com / User123!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
